@@ -212,7 +212,7 @@ const playerMove = (x, y, cellId) => {
             console.log("COORDINATES: ",retCell[0], retCell[1]);
             let retCellID = coordinateToCell[retCell[0]][retCell[1]];
             console.log("ETST",retCellID)
-            document.getElementById(retCellID).innerHTML='<img src="../resources/oIcon.png" alt="O"/>';
+            document.getElementById(retCellID).innerHTML='<img src="https://krishna-chilukuri.github.io/TicTacToe-with-Minimax/resources/oIcon.png" alt="O"/>';
             document.getElementById(retCellID).classList.remove('hoverCell');
 
             console.log("AI move completed!!!!");
