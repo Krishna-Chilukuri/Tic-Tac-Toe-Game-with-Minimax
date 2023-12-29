@@ -1,28 +1,33 @@
-var winList = [[[0, 0], [0,1], [0, 2]], [[1,0], [1,1], [1,2]], [[2,0], [2,1], [2,2]],
+var xoMatrix = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+var winList =   [[[0, 0], [0,1], [0, 2]], [[1,0], [1,1], [1,2]], [[2,0], [2,1], [2,2]],
                 [[0, 0], [1,0], [2,0]], [[0,1], [1,1], [2,1]], [[0,2], [1,2], [2,2]],
                 [[0,0], [1,1], [2,2]], [[0,2], [1,1], [2,0]]];
-                //0 , 1, 2
-                //3, 4, 5
-                //6, 7
-                //Again in each of these indices there are 3 points.
-                //So, each point is referenced by [0][0] = [0, 0] from winList[0]
-                //Now, for each of the inner 0's, it's [0][0][0]
-var xoMatrix = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
-// var xoMatrix = [[1, 2, 1], [2, 2, 2], [0, 1, 1]];
-// var currentMove = 1;
-modeOfGame = 0;
 
-// for (let index = 0; index < winList.length; index++) {
-//     const element = winList[index];
-//     for (let index1 = 0; index1 < element.length; index1++) {
-//         const element1 = element[index1];
-//         console.log(element1);
-        
-//     }
-// }
+const coordinateToCell = [["cell1", "cell2", "cell3"], 
+                        ["cell4", "cell5", "cell6"],
+                        ["cell7", "cell8", "cell9"]];
 
-// console.log("AFTER FOR")
-// console.log(winList[0][0])
+var modeOfGame = 0;
+var gameOver = false;
+
+const resultPara = document.querySelector(".resultPara");
+const ticTacCells = document.querySelector(".tictactoeCell");
+
+function resetGame() {
+    xoMatrix = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+    console.log("XO MATRIX SET TO 0");
+    gameOver = false;
+    for (let index = 1; index < 10; index++){
+        // const element = array[index];
+        // let index11 = String(index);
+        // const cellID = 'cell ${index1}';
+        const cellID = 'cell'+index;
+        document.getElementById(cellID).innerHTML = "";
+        document.getElementById(cellID).classList.add('hoverCell');
+        console.log(cellID, "is reset", typeof(cellID));
+    }
+    resultPara.textContent="";
+}
 
 function checkForWin(val){
 
@@ -166,51 +171,74 @@ function miniMax(depth, currentMove){
     }
 }
 
-// console.log(checkForWin(1));
-// console.log(isGameNotOver());
-// console.log(getCellsAvailable());
-// console.log(xoMatrix);
-// console.log(winList);
-// console.log(returnScore(0));
-// console.log("JKAFhfjkn");
-// console.log(checkForUserWin([1,2]))
+function blockAllInputs() {
+    console.log("INPUTS DISABLED");
+    // ticTacCells.disabled = true;
+    gameOver = true;
+    // document.getElementById("cell1").disabled = true;
+    // document.getElementById("cell4").onclick = blockThis();
+}
 
-while (true) {
-    var prompt = require("prompt-sync")({sigint: true});
-    // let x1 = prompt("TESTING!!");
-    console.log(xoMatrix);
-    if(!isGameNotOver()){
-        console.log("It's a Win - Win situation");
-        break;
+
+const playerMove = (x, y, cellId) => {
+    if (!gameOver && xoMatrix[x][y] == 0){
+        xoMatrix[x][y] = 1;
+        console.log(cellId, typeof(cellId));
+        // <img src="../resources/xIcon." alt="">
+        {/* <img src="../resources/oIcon." alt=""> */}
+        document.getElementById(cellId).innerHTML='<img src="../resources/xIcon.png" alt="X"/>';
+        // document.getElementById("cell1")
+        document.getElementById(cellId).classList.remove('hoverCell');
+        console.log("User played his move properly!!");
+        if(!isGameNotOver()) {
+            console.log("It's a Win - Win situation");
+            resultPara.textContent = "It's a Draw!";
+            blockAllInputs();
+            //Block all other inputs except for reset
+            // Result para ni set cheyyali with the above msg
+        }
+        else if(checkForWin(1)) {
+            console.log("U Won the game");
+            resultPara.textContent = "U Won the game!!!!!";
+            blockAllInputs();
+            //Block all other inputs except for reset
+            // Result para ni set cheyyali with the above msg
+        }
+        else {
+            let retCell = miniMax(0, 1)[1];
+            console.log("Return Cell from minimax: ",retCell);
+            xoMatrix[retCell[0]][retCell[1]] = 2;
+            console.log("COORDINATES: ",retCell[0], retCell[1]);
+            let retCellID = coordinateToCell[retCell[0]][retCell[1]];
+            console.log("ETST",retCellID)
+            document.getElementById(retCellID).innerHTML='<img src="../resources/oIcon.png" alt="O"/>';
+            document.getElementById(retCellID).classList.remove('hoverCell');
+
+            console.log("AI move completed!!!!");
+            if(!isGameNotOver()) {
+                console.log("It's a Win - Win situation");
+                resultPara.textContent = "It's a Draw!";
+                blockAllInputs();
+                //Block all other inputs except for reset
+                // Result para ni set cheyyali with the above msg
+            }
+            else if(checkForWin(2)) {
+                console.log("COM Won the game!!!");
+                resultPara.textContent = "U Lost...COM Won the game!";
+                blockAllInputs();
+                //Block all other inputs except for reset
+                // Result para ni set cheyyali with the above msg
+            }
+        }
     }
-    if(checkForWin(2)){
-        console.log("My AI Won against u, LOL");
-        break;
-    }
-    
-    let iPos = prompt("Enter i position: ");
-    let jPos = prompt("Enter j position: ");
-    if(xoMatrix[iPos][jPos] == 0) {
-        xoMatrix[iPos][jPos] = 1;
+    else if(gameOver) {
+        console.log("GAME IS OVER!!! Click Reset or Reload page");
     }
     else {
-        console.log("Invalid Position, Select another Position");
-        continue;
+        console.log("User clicked on a previously assigned cell!!");
     }
-    if(checkForWin(1)) {
-        console.log("U WON!!!!!!");
-        console.log(xoMatrix);
-        break;
-    }
-    if(!isGameNotOver()) {
-        console.log("It's a Win - Win situation!");
-        break;
-    }
-    // let xpos = prompt("AJKRGHJK");
-    let retCell = miniMax(0, 1);
-    // let axpos = prompt("AJKRsdfggsGHJK");
-    console.log(retCell);
-    retCell = retCell[1];
-    xoMatrix[retCell[0]][retCell[1]] = 2;
-        // console.log(xoMatrix);
+    // console.log("FAIL!!");
+    console.log(xoMatrix[0], xoMatrix[1], xoMatrix[2]);
 }
+
+// playerMove(1,1);
