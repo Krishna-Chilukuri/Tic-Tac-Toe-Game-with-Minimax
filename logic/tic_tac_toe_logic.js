@@ -186,8 +186,8 @@ const playerMove = (x, y, cellId) => {
         console.log(cellId, typeof(cellId));
         // <img src="../resources/xIcon." alt="">
         {/* <img src="../resources/oIcon." alt=""> */}
-        // document.getElementById(cellId).innerHTML = '<img src="../resources/xIcon.png" alt="X"></img>';
-        document.getElementById(cellId).innerHTML='<img src="https://krishna-chilukuri.github.io/TicTacToe-with-Minimax/resources/xIcon.png" alt="X"/>';
+        document.getElementById(cellId).innerHTML = '<img src="../resources/xIcon.png" alt="X"></img>';
+        // document.getElementById(cellId).innerHTML='<img src="https://krishna-chilukuri.github.io/TicTacToe-with-Minimax/resources/xIcon.png" alt="X"/>';
         // document.getElementById("cell1")
         document.getElementById(cellId).classList.remove('hoverCell');
         console.log("User played his move properly!!");
