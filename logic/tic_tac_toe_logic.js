@@ -209,8 +209,8 @@ function blockAllInputs() {
 
 
 const playerMove = (x, y, cellId) => {
-    userVsai = true;
     if (!aiVsaiToggle && !gameOver && xoMatrix[x][y] == 0){
+        userVsai = true;
         xoMatrix[x][y] = 1;
         console.log(cellId, typeof(cellId));
         // <img src="../resources/xIcon." alt="">
