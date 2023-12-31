@@ -1,7 +1,7 @@
 .projectSec{
     max-width: 100vw;
     height:61vh;
-    background-color: red;
+    /* background-color: red; */
     display: grid;
     grid-template-columns: auto auto;
     gap: 2vw; 
@@ -13,7 +13,7 @@
 .resultSec{
     max-width: 100vw;
     height: 20vh;
-    background-color: aqua;
+    /* background-color: aqua; */
     display: grid;
     grid-template-columns: auto;
     /* align-items: center; */
@@ -71,7 +71,7 @@
     grid-template-columns: auto;
     justify-content: center;
     align-items: center;
-    background-color: purple;
+    /* background-color: purple; */
     /* border: 2px solid white; */
     width: 20vw;
     height: 20vh;

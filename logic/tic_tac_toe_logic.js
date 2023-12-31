@@ -9,14 +9,17 @@ const coordinateToCell = [["cell1", "cell2", "cell3"],
 
 var modeOfGame = 0;
 var gameOver = false;
-
+var player = 1;
+var aiVsaiToggle = false;
 const resultPara = document.querySelector(".resultPara");
 const ticTacCells = document.querySelector(".tictactoeCell");
 
 function resetGame() {
+    player = 1;
     xoMatrix = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
     console.log("XO MATRIX SET TO 0");
     gameOver = false;
+    aiVsaiToggle = false;
     for (let index = 1; index < 10; index++){
         // const element = array[index];
         // let index11 = String(index);
@@ -75,6 +78,21 @@ function returnScore(depth){
     else {
         return 0
     }
+}
+
+function randomIntGenerator(maxVal) {
+    return Math.floor(Math.random() * maxVal);
+}
+
+function getChoices(moves, scores, maxScore){
+    let retChoices = [];
+    for (let index = 0; index < scores.length; index++) {
+        const element = scores[index];
+        if(element == maxScore) {
+            retChoices.push(moves[index]);
+        }
+    }
+    return retChoices;
 }
 
 function checkForUserWin(cell){
@@ -144,17 +162,25 @@ function miniMax(depth, currentMove){
     });
     if(currentMove == 1){
         let maxScoreInd = 0;
+        let maxScore = scores[0];
         for (let index = 0; index < scores.length; index++) {
             const element = scores[index];
             if(element > scores[maxScoreInd]) {
                 maxScoreInd = index;
+                maxScore = element;
             }
         }
         // let maxScoreInd = scores.indexOf(Math.max(scores));
-        let choice = moves[maxScoreInd];
+        let choices = getChoices(moves, scores, maxScore);
+        let choiceIndex = randomIntGenerator(choices.length);
+        // let choice = choices[choiceIndex];
+        let choice = choices[randomIntGenerator(choices.length)]
+        // let choice = moves[maxScoreInd];
         // console.log("RETURNING FROM IF", maxScoreInd, choice, scores);
         // console.log("SCORES IS: ",scores)
-        return [scores[maxScoreInd], choice, scores, moves]
+        // console.log("KEPPPPPS: ", allMaxInd);
+        // let choice = moves[randomIntGenerator(allMaxInd.length)];
+        return [scores[maxScoreInd], choice, scores, moves, choices, choiceIndex];
     }
     else{
         let minScoreInd = 0;
@@ -181,7 +207,7 @@ function blockAllInputs() {
 
 
 const playerMove = (x, y, cellId) => {
-    if (!gameOver && xoMatrix[x][y] == 0){
+    if (!aiVsaiToggle && !gameOver && xoMatrix[x][y] == 0){
         xoMatrix[x][y] = 1;
         console.log(cellId, typeof(cellId));
         // <img src="../resources/xIcon." alt="">
