@@ -11,6 +11,7 @@ var modeOfGame = 0;
 var gameOver = false;
 var player = 1;
 var aiVsaiToggle = false;
+var userVsai = false;
 const resultPara = document.querySelector(".resultPara");
 const ticTacCells = document.querySelector(".tictactoeCell");
 
@@ -20,6 +21,7 @@ function resetGame() {
     console.log("XO MATRIX SET TO 0");
     gameOver = false;
     aiVsaiToggle = false;
+    userVsai = false;
     for (let index = 1; index < 10; index++){
         // const element = array[index];
         // let index11 = String(index);
@@ -207,6 +209,7 @@ function blockAllInputs() {
 
 
 const playerMove = (x, y, cellId) => {
+    userVsai = true;
     if (!aiVsaiToggle && !gameOver && xoMatrix[x][y] == 0){
         xoMatrix[x][y] = 1;
         console.log(cellId, typeof(cellId));
