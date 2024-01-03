@@ -1,0 +1,39 @@
+@media screen and (max-width:1000px){
+    .projectSec{
+        /* background-color: red; */
+        display: grid;
+        grid-template-columns: auto;
+        /* gap: 1vw; */
+        justify-content: center;
+        align-items: center;
+        margin: 2vw;
+    }
+
+    .tictactoeBoard {
+        /* background-color: purple; */
+        /* margin: 2vw; */
+        width: 54vw;
+        height: 30vh;
+    }
+
+    .tictactoeCell {
+        width: 18vw;
+        height: 10vh;
+    }
+
+    .diffAndClear{
+        /* background-color: green; */
+        grid-row-start: 2;
+        display: grid;
+        grid-template-columns: auto;
+        /* justify-content: ce; */
+        width : 54vw;
+        height: 10vh;
+    }
+
+    .diffAndClear button{
+        padding: 1vh 10vw;
+        margin: 1vh 0vw;
+    }
+
+}
